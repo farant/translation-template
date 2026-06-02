@@ -13,3 +13,12 @@ Helper scripts (run these for mechanical steps):
 
 (Transcription/translation conventions, compaction heuristics, and the guided
 skills are added in the skills implementation plan.)
+
+## Web apps (localhost)
+
+- Setup dashboard:  `.venv/bin/python -m scripts.dashboard [port]`  (default 8000)
+  Shows dependency checklist + per-work progress. Read-only/informational.
+- Proofreading viewer:  `.venv/bin/python -m scripts.viewer [port]`  (default 8001)
+  Generated HTML beside the source scan; click a paragraph to see its page,
+  click the flag (&#9873;) to record an issue into `work/<name>/proofing-notes.yaml`.
+  Build a work's HTML first: `.venv/bin/python -m scripts.build_html work/<name> "<Title>" output`.
