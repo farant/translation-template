@@ -1,0 +1,33 @@
+import yaml
+from scripts import dashboard_data
+
+
+def _make_work(root, name, title, stages):
+    d = root / "work" / name
+    d.mkdir(parents=True)
+    (d / "status.yaml").write_text(
+        yaml.safe_dump({"work": name, "title": title, "ocr_method": "claude-vision",
+                        "stages": stages}), encoding="utf-8")
+
+
+def test_works_overview_reads_all_works(tmp_path):
+    _make_work(tmp_path, "alpha", "Alpha", {"ingest": {"done": True}})
+    _make_work(tmp_path, "beta", "Beta", {"ingest": {"done": False}})
+    works = dashboard_data.works_overview(tmp_path / "work")
+    assert [w["work"] for w in works] == ["alpha", "beta"]
+    assert works[0]["title"] == "Alpha"
+    assert works[0]["stages"]["ingest"]["done"] is True
+    assert works[0]["ocr_method"] == "claude-vision"
+
+
+def test_works_overview_empty_when_no_dir(tmp_path):
+    assert dashboard_data.works_overview(tmp_path / "work") == []
+
+
+def test_dashboard_state_has_checks_and_works(tmp_path, monkeypatch):
+    from scripts import checks
+    monkeypatch.setattr(checks.shutil, "which", lambda name: None)
+    _make_work(tmp_path, "alpha", "Alpha", {})
+    state = dashboard_data.dashboard_state(tmp_path)
+    assert "checks" in state and isinstance(state["checks"], list)
+    assert [w["work"] for w in state["works"]] == ["alpha"]
