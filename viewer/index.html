@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proofreading — Translation Template</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <strong>Proofreading</strong>
+  <select id="work"></select>
+  <label><input type="checkbox" id="latin" /> Latin</label>
+  <span id="hint">Click a paragraph to see its source page. Use &#9873; to flag an issue.</span>
+</header>
+<main>
+  <div id="left"><iframe id="frame" title="Generated text"></iframe></div>
+  <div id="right"><img id="scan" alt="Source scan" /></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

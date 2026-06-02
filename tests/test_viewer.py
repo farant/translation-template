@@ -73,3 +73,11 @@ def test_viewer_flag_post_writes_note(tmp_path):
 def test_viewer_unknown_is_404(tmp_path):
     route = viewer.make_route(_repo(tmp_path))
     assert route("GET", "/nope", b"").status == 404
+
+
+def test_viewer_index_served_after_assets_exist(tmp_path):
+    route = viewer.make_route(_repo(tmp_path))
+    resp = route("GET", "/", b"")
+    assert resp.status == 200
+    assert b"Proofreading" in resp.body
+    assert b"app.js" in resp.body
