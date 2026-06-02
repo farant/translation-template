@@ -1,0 +1,16 @@
+body { font-family: -apple-system, system-ui, sans-serif; max-width: 60rem;
+       margin: 2rem auto; padding: 0 1rem; color: #222; line-height: 1.5; }
+h1 { margin-bottom: 0.25rem; }
+.sub { color: #666; margin-top: 0; }
+section { margin-top: 2rem; }
+table { border-collapse: collapse; width: 100%; }
+td, th { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid #eee; vertical-align: top; }
+.ok { color: #1a7f37; font-weight: 600; }
+.missing { color: #b3261e; font-weight: 600; }
+code { background: #f4f4f4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.bar { background: #eee; border-radius: 4px; height: 0.7rem; overflow: hidden; width: 14rem; display: inline-block; vertical-align: middle; }
+.bar > span { display: block; height: 100%; background: #1a7f37; }
+.work { margin-bottom: 1rem; }
+.stage { display: inline-block; margin-right: 0.5rem; font-size: 0.85rem; }
+.stage.done::before { content: "\2705 "; }
+.stage.pending::before { content: "\2b1c "; }

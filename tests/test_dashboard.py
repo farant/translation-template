@@ -60,3 +60,11 @@ def test_dashboard_route_serves_index(tmp_path):
 def test_dashboard_route_unknown_is_404(tmp_path):
     route = dashboard.make_route(tmp_path)
     assert route("GET", "/nope", b"").status == 404
+
+
+def test_dashboard_index_served_after_assets_exist(tmp_path):
+    route = dashboard.make_route(tmp_path)
+    resp = route("GET", "/", b"")
+    assert resp.status == 200
+    assert b"Setup Dashboard" in resp.body
+    assert b"app.js" in resp.body
