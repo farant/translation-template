@@ -8,6 +8,12 @@ dependencies = ["PyYAML>=6.0", "Pillow>=10.0"]
 [dependency-groups]
 dev = ["pytest>=8.0"]
 
+# `scripts` is the only importable package; the repo also has non-package
+# top-level dirs (dashboard/, viewer/, tests/), so declare it explicitly —
+# otherwise setuptools' flat-layout auto-discovery errors on a fresh install.
+[tool.setuptools]
+packages = ["scripts"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
