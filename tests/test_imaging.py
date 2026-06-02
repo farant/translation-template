@@ -36,3 +36,18 @@ def test_write_crops_creates_eight_files(tmp_path, sample_image):
     for p in written:
         assert Path(p).exists()
     assert (out / "page-001_q1_top_left.png").exists()
+
+
+from scripts import extract_pages
+
+
+def test_split_rendered_spreads(tmp_path, sample_image):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    sample_image.save(raw / "page-1.png")  # one spread = two pages
+    out = tmp_path / "pages"
+    result = extract_pages.split_rendered(raw, out)
+    # One spread -> page-001.png (left) and page-002.png (right)
+    assert (out / "page-001.png").exists()
+    assert (out / "page-002.png").exists()
+    assert result == [str(out / "page-001.png"), str(out / "page-002.png")]
