@@ -46,3 +46,21 @@ def test_validate_all_collects_per_skill(tmp_path):
         (d / "SKILL.md").write_text(f"---\nname: {name}\ndescription: x\n---\n", encoding="utf-8")
     results = v.validate_all(tmp_path)
     assert results == {"a": [], "b": []}
+
+
+from pathlib import Path
+
+EXPECTED_SKILLS = {
+    "start", "setup", "ingest-pdf", "transcribe",
+    "translate", "build-html", "proofread", "publish",
+}
+
+
+def test_all_project_skills_present_and_valid():
+    skills_root = Path(__file__).resolve().parent.parent / ".claude" / "skills"
+    results = v.validate_all(skills_root)
+    # every expected skill exists
+    assert EXPECTED_SKILLS.issubset(set(results)), EXPECTED_SKILLS - set(results)
+    # and none has problems
+    problems = {name: probs for name, probs in results.items() if probs}
+    assert problems == {}, problems
