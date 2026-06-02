@@ -81,3 +81,33 @@ def test_viewer_index_served_after_assets_exist(tmp_path):
     assert resp.status == 200
     assert b"Proofreading" in resp.body
     assert b"app.js" in resp.body
+
+
+def test_viewer_flag_rejects_traversal_work(tmp_path):
+    repo = _repo(tmp_path)
+    route = viewer.make_route(repo)
+    body = _json.dumps({"work": "../../etc", "page": "001", "block": 0, "note": "x"}).encode()
+    resp = route("POST", "/api/flag", body)
+    assert resp.status == 400
+    # nothing written outside the work tree
+    assert not (tmp_path.parent / "proofing-notes.yaml").exists()
+
+
+def test_viewer_flag_rejects_malformed_body(tmp_path):
+    route = viewer.make_route(_repo(tmp_path))
+    assert route("POST", "/api/flag", b"not json").status == 400
+    assert route("POST", "/api/flag", b"{}").status == 400  # missing keys
+
+
+def test_viewer_flag_still_works_for_valid_request(tmp_path):
+    repo = _repo(tmp_path)
+    route = viewer.make_route(repo)
+    body = _json.dumps({"work": "alpha", "page": "001", "block": 0, "note": "typo"}).encode()
+    resp = route("POST", "/api/flag", body)
+    assert resp.status == 200
+    assert proofing.load_flags(repo / "work" / "alpha") == [{"page": "001", "block": 0, "note": "typo"}]
+
+
+def test_viewer_rejects_pages_traversal(tmp_path):
+    route = viewer.make_route(_repo(tmp_path))
+    assert route("GET", "/pages/../../etc/passwd", b"").status == 403

@@ -51,10 +51,8 @@ def test_dashboard_route_status_endpoint(tmp_path, monkeypatch):
 def test_dashboard_route_serves_index(tmp_path):
     route = dashboard.make_route(tmp_path)
     resp = route("GET", "/", b"")
-    # index.html is created in Task 5; here we only assert routing returns the
-    # asset path's response (404 until the file exists, 200 after). Accept both
-    # statuses but require the route to target text/html or 'not found'.
-    assert resp.status in (200, 404)
+    assert resp.status == 200
+    assert b"Setup Dashboard" in resp.body
 
 
 def test_dashboard_route_unknown_is_404(tmp_path):

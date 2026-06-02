@@ -42,8 +42,14 @@ def make_route(repo_root):
             target = safe_join(work_dir, clean[len("/pages/"):])
             return file_response(target) if target else Response(403, "text/plain", b"forbidden")
         if method == "POST" and clean == "/api/flag":
-            data = json.loads(body or b"{}")
-            add_flag(work_dir / data["work"], data["page"], data["block"], data["note"])
+            try:
+                data = json.loads(body or b"{}")
+                safe_work = safe_join(work_dir, data["work"])
+                if safe_work is None:
+                    return Response(400, "text/plain", b"invalid work")
+                add_flag(safe_work, data["page"], data["block"], data["note"])
+            except (json.JSONDecodeError, KeyError, TypeError):
+                return Response(400, "text/plain", b"invalid request")
             return json_response({"ok": True})
         return Response(404, "text/plain", b"not found")
 
