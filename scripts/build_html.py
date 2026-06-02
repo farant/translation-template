@@ -27,3 +27,22 @@ def render_block(block, field):
     if btype in ("scripture", "footnote"):
         return f"<p{attrs}><em>{text}</em></p>"
     return f"<p{attrs}>{text}</p>"
+
+
+def load_sections(translation_dir):
+    """Load and concatenate all section-*.json arrays, in filename order."""
+    blocks = []
+    for path in sorted(Path(translation_dir).glob("section-*.json")):
+        blocks.extend(json.loads(path.read_text(encoding="utf-8")))
+    return blocks
+
+
+def build_body(blocks, field):
+    """Return (body_html, toc) where toc is a list of (id, title)."""
+    parts, toc = [], []
+    for block in blocks:
+        if block["type"] == "heading":
+            parts.append("<hr />")
+            toc.append((kebab(block[field]), block[field]))
+        parts.append(render_block(block, field))
+    return "\n".join(parts), toc
