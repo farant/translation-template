@@ -1,0 +1,11 @@
+work: sample-work
+title: "Sample Work"
+source_pdf: source/sample.pdf
+ocr_method: claude-vision
+template_detached: false
+stages:
+  ingest:     { done: true }
+  transcribe: { done: true }
+  translate:  { done: true }
+  build_html: { done: false }
+  publish:    { done: false }

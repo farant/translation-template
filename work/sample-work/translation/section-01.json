@@ -1,0 +1,6 @@
+[
+  { "page": "001", "region": "q1_top_left", "type": "heading", "source": "CAPUT PRIMUM", "english": "Chapter One", "notes": [] },
+  { "page": "001", "region": "q3_bottom_left", "type": "body", "source": "In principio creavit Deus caelum et terram.", "english": "In the beginning God created heaven and earth.", "notes": [] },
+  { "page": "002", "type": "scripture", "source": "Dixitque Deus: Fiat lux. Et facta est lux.", "english": "And God said: Let there be light. And there was light.", "notes": [] },
+  { "page": "002", "type": "footnote", "source": "Vide Augustinum, De Genesi ad litteram.", "english": "See Augustine, On the Literal Meaning of Genesis.", "notes": [] }
+]

@@ -1,0 +1,10 @@
+work_defaults:
+  source_language: la
+  transcription_mode: normalize
+  bible_reference_style: douay-rheims
+  heading_format: "Chapter {n}: {title}"
+translation:
+  exclude_editorial_apparatus: true
+  target_register: formal
+html:
+  simple_tags_only: true

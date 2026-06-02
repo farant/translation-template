@@ -59,7 +59,7 @@ _DOC = """<!DOCTYPE html>
 <body>
 <h1>{title}</h1>
 <hr />
-<p><b>{toc_label}</b></p>
+<h2>{toc_label}</h2>
 <ul>
 {toc}
 </ul>

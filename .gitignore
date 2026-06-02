@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+source/*.pdf
+work/**/pages/
+work/**/_raw/
+output/
+!work/sample-work/
