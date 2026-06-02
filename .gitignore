@@ -7,4 +7,6 @@ source/*.pdf
 work/**/pages/
 work/**/_raw/
 output/
-!work/sample-work/
+# Keep the bundled sample work's generated artifacts tracked (it ships with the template).
+!work/sample-work/pages/
+!work/sample-work/_raw/

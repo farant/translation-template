@@ -51,3 +51,17 @@ def test_split_rendered_spreads(tmp_path, sample_image):
     assert (out / "page-001.png").exists()
     assert (out / "page-002.png").exists()
     assert result == [str(out / "page-001.png"), str(out / "page-002.png")]
+
+
+def test_copy_rendered_renumbers_single_pages(tmp_path, sample_image):
+    # The default (non --spread) path: pdftoppm names pages page-1, page-2, ...
+    # which must be renumbered to zero-padded page-001, page-002 in source order.
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    sample_image.save(raw / "page-1.png")
+    sample_image.save(raw / "page-2.png")
+    out = tmp_path / "pages"
+    result = extract_pages.copy_rendered(raw, out)
+    assert result == [str(out / "page-001.png"), str(out / "page-002.png")]
+    assert (out / "page-001.png").exists()
+    assert (out / "page-002.png").exists()
